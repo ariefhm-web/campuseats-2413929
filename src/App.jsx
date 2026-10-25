@@ -15,6 +15,7 @@ function App() {
   const [cart, setCart] = useState([])
   const [view, setView] = useState('menu')
   const [lastOrder, setLastOrder] = useState(null)
+  const [viewed, setViewed] = useState([])
 
   useEffect(() => {
     const controller = new AbortController()
@@ -78,7 +79,22 @@ function App() {
     setView('done')
   }
 
+  function handleViewItem(itemId) {
+    setViewed((prev) => {
+      const rest = prev.filter((id) => id !== itemId)
+      return [itemId, ...rest].slice(0, 5)
+    })
+  }
+
   const cartCount = cart.reduce((sum, line) => sum + line.qty, 0)
+
+  const itemsById = {}
+  vendors.forEach((vendor) => {
+    vendor.menu.forEach((item) => {
+      itemsById[item.id] = item
+    })
+  })
+  const viewedItems = viewed.map((id) => itemsById[id]).filter(Boolean)
 
   let content
   if (view === 'cart') {
@@ -131,7 +147,24 @@ function App() {
         {selectedVendor && (
           <section>
             <h2 className="section-title">Menu: {selectedVendor.name}</h2>
-            <MenuList items={selectedVendor.menu} onAdd={handleAddToCart} />
+            <MenuList
+              items={selectedVendor.menu}
+              onAdd={handleAddToCart}
+              onView={handleViewItem}
+            />
+          </section>
+        )}
+        {viewedItems.length > 0 && (
+          <section className="card">
+            <h2 className="section-title">Recently viewed</h2>
+            <div className="viewed-chips">
+              {viewedItems.map((item) => (
+                <span key={item.id} className="tag">{item.name}</span>
+              ))}
+            </div>
+            <button type="button" className="view-link" onClick={() => setViewed([])}>
+              Clear
+            </button>
           </section>
         )}
       </>
