@@ -2,26 +2,26 @@ import { useEffect, useState } from 'react'
 import Header from './components/Header.jsx'
 import VendorCard from './components/VendorCard.jsx'
 import MenuList from './components/MenuList.jsx'
+import CartPage from './components/CartPage.jsx'
 import Footer from './components/Footer.jsx'
 import { Loading, ErrorMessage } from './components/Status.jsx'
-import CartPage from './components/CartPage.jsx'
 
 function App() {
+  // Fetched data
   const [vendors, setVendors] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
   const [reloadKey, setReloadKey] = useState(0)
-  const [selectedVendorId, setSelectedVendorId] = useState(null)
-  const [cart, setCart] = useState([])
-  const [view, setView] = useState('menu')
-  const [lastOrder, setLastOrder] = useState(null)
-  const [viewed, setViewed] = useState([])
 
+  // UI + cart state
+  const [selectedVendorId, setSelectedVendorId] = useState(null)
+  const [cart, setCart] = useState([]) // lines of { item, qty }
+  const [view, setView] = useState('menu') // 'menu' | 'cart' | 'done'
+  const [lastOrder, setLastOrder] = useState(null)
+
+  // B2: fetch vendors (runs again when reloadKey changes)
   useEffect(() => {
     const controller = new AbortController()
-    // Resetting loading/error at the start of each fetch is required by the lab;
-    // React's set-state-in-effect rule is intentionally disabled here.
-    // eslint-disable-next-line react-hooks/set-state-in-effect
     setLoading(true)
     setError(null)
 
@@ -32,7 +32,7 @@ function App() {
       })
       .then((data) => {
         setVendors(data)
-        setSelectedVendorId((prev) => prev ?? data[0]?.id ?? null)
+        setSelectedVendorId((current) => current ?? data[0]?.id ?? null)
       })
       .catch((err) => {
         if (err.name !== 'AbortError') setError(err.message)
@@ -45,56 +45,42 @@ function App() {
   }, [reloadKey])
 
   const selectedVendor = vendors.find((v) => v.id === selectedVendorId)
+  const cartCount = cart.reduce((sum, line) => sum + line.qty, 0)
 
+  // B3: cart handlers (always return NEW arrays)
   function handleAddToCart(item) {
-    setCart((prevCart) => {
-      const existing = prevCart.find((line) => line.item.id === item.id)
+    setCart((prev) => {
+      const existing = prev.find((line) => line.item.id === item.id)
       if (existing) {
-        return prevCart.map((line) =>
-          line.item.id === item.id ? { ...line, qty: line.qty + 1 } : line,
+        return prev.map((line) =>
+          line.item.id === item.id ? { ...line, qty: line.qty + 1 } : line
         )
       }
-      return [...prevCart, { item, qty: 1 }]
+      return [...prev, { item, qty: 1 }]
     })
   }
 
   function handleChangeQty(itemId, delta) {
-    setCart((prevCart) =>
-      prevCart
+    setCart((prev) =>
+      prev
         .map((line) =>
-          line.item.id === itemId ? { ...line, qty: line.qty + delta } : line,
+          line.item.id === itemId ? { ...line, qty: line.qty + delta } : line
         )
-        .filter((line) => line.qty > 0),
+        .filter((line) => line.qty > 0)
     )
   }
 
   function handleRemove(itemId) {
-    setCart((prevCart) => prevCart.filter((line) => line.item.id !== itemId))
+    setCart((prev) => prev.filter((line) => line.item.id !== itemId))
   }
 
+  // B5: compute total BEFORE clearing the cart
   function handlePlaceOrder(details) {
     const total = cart.reduce((sum, line) => sum + line.item.price * line.qty, 0)
     setLastOrder({ ...details, total })
     setCart([])
     setView('done')
   }
-
-  function handleViewItem(itemId) {
-    setViewed((prev) => {
-      const rest = prev.filter((id) => id !== itemId)
-      return [itemId, ...rest].slice(0, 5)
-    })
-  }
-
-  const cartCount = cart.reduce((sum, line) => sum + line.qty, 0)
-
-  const itemsById = {}
-  vendors.forEach((vendor) => {
-    vendor.menu.forEach((item) => {
-      itemsById[item.id] = item
-    })
-  })
-  const viewedItems = viewed.map((id) => itemsById[id]).filter(Boolean)
 
   let content
   if (view === 'cart') {
@@ -106,27 +92,24 @@ function App() {
         onPlaceOrder={handlePlaceOrder}
       />
     )
-  } else if (view === 'done') {
-    content = lastOrder ? (
-      <div className="card">
+  } else if (view === 'done' && lastOrder) {
+    content = (
+      <section className="card">
         <h2>Order placed</h2>
-        <p>Pickup time: {lastOrder.pickupTime}</p>
-        <p>Total: RM {lastOrder.total.toFixed(2)}</p>
-        <p className="muted">
-          {lastOrder.name} · {lastOrder.mahallah}
+        <p>
+          Thank you, {lastOrder.name}. Pick up at {lastOrder.pickupTime} (Mahallah{' '}
+          {lastOrder.mahallah}). Total RM {lastOrder.total.toFixed(2)}.
         </p>
-      </div>
-    ) : (
-      <p>Order placed.</p>
+        <button className="btn" onClick={() => setView('menu')}>
+          Back to menus
+        </button>
+      </section>
     )
   } else if (loading) {
     content = <Loading />
   } else if (error) {
     content = (
-      <ErrorMessage
-        message={error}
-        onRetry={() => setReloadKey((k) => k + 1)}
-      />
+      <ErrorMessage message={error} onRetry={() => setReloadKey((k) => k + 1)} />
     )
   } else {
     content = (
@@ -147,24 +130,7 @@ function App() {
         {selectedVendor && (
           <section>
             <h2 className="section-title">Menu: {selectedVendor.name}</h2>
-            <MenuList
-              items={selectedVendor.menu}
-              onAdd={handleAddToCart}
-              onView={handleViewItem}
-            />
-          </section>
-        )}
-        {viewedItems.length > 0 && (
-          <section className="card">
-            <h2 className="section-title">Recently viewed</h2>
-            <div className="viewed-chips">
-              {viewedItems.map((item) => (
-                <span key={item.id} className="tag">{item.name}</span>
-              ))}
-            </div>
-            <button type="button" className="view-link" onClick={() => setViewed([])}>
-              Clear
-            </button>
+            <MenuList items={selectedVendor.menu} onAdd={handleAddToCart} />
           </section>
         )}
       </>

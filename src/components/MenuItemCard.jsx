@@ -1,4 +1,4 @@
-function MenuItemCard({ item, onAdd, onView }) {
+function MenuItemCard({ item, onAdd}) {
   return (
     <article className="card menu-card">
       <div className="thumb" aria-hidden="true">{item.name.charAt(0)}</div>
@@ -6,9 +6,6 @@ function MenuItemCard({ item, onAdd, onView }) {
       <h3>{item.name}</h3>
       {item.description && <p className="muted">{item.description}</p>}
       <p className="price">RM {item.price.toFixed(2)}</p>
-      <button type="button" className="view-link" onClick={() => onView(item.id)}>
-        View
-      </button>
       <button
         className="btn"
         disabled={item.available === false}
