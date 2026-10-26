@@ -10,3 +10,9 @@ One thing the AI got wrong and how I fixed it:
 What I asked for: Identified the error becuase of why it show blank pages
 What I kept, changed or rejected, and why: I Change the Header.jsx file where forgot put {} on cartCount
 One thing the AI got wrong and how I fixed it: none
+
+
+## Week 3- Tool(s):Claude 
+What I asked for: Identified the error because of why it show blank pages and help me identify what TODO task needs to be done
+What I kept, changed or rejected, and why: I make a change on the App.jsx file where I mostly not include the imports of jsx files, useState, fetching problems and TODO requirements needed. This cause the system to crash and show blank pages
+One thing the AI got wrong and how I fixed it: none
