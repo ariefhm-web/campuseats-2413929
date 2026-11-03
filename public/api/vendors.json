@@ -1,0 +1,191 @@
+[
+  {
+    "id": "2413929-pasta-street",
+    "name": "Pasta Street",
+    "location": "Mahallah Farouq, Block A",
+    "openHours": "12:00 pm - 9:00 pm",
+    "isOpen": true,
+    "menu": [
+      {
+        "id": "2413929-m1",
+        "name": "Spaghetti Aglio Olio",
+        "price": 10,
+        "category": "Foods",
+        "popular": true
+      },
+      {
+        "id": "2413929-m2",
+        "name": "Carbonara Spaghetti",
+        "price": 10,
+        "category": "Foods",
+        "popular": true
+      },
+      {
+        "id": "2413929-m3",
+        "name": "Chicken Bolognese",
+        "price": 10,
+        "category": "Foods",
+        "popular": false
+      },
+      {
+        "id": "2413929-m4",
+        "name": "Seafood Marinara",
+        "price": 11,
+        "category": "Foods",
+        "popular": true
+      },
+      {
+        "id": "2413929-m5",
+        "name": "Garlic Bread",
+        "price": 6,
+        "category": "Appetizers",
+        "popular": true
+      },
+      {
+        "id": "2413929-m6",
+        "name": "French Fries",
+        "price": 5,
+        "category": "Appetizers",
+        "popular": false
+      },
+      {
+        "id": "2413929-m7",
+        "name": "Chicken Nuggets",
+        "price": 6,
+        "category": "Appetizers",
+        "popular": false
+      },
+      {
+        "id": "2413929-m8",
+        "name": "Iced Lemon Tea",
+        "price": 3,
+        "category": "Beverages",
+        "popular": true
+      },
+      {
+        "id": "2413929-m9",
+        "name": "Iced Latte",
+        "price": 8,
+        "category": "Beverages",
+        "popular": false
+      },
+      {
+        "id": "2413929-m10",
+        "name": "Mineral Water",
+        "price": 2,
+        "category": "Beverages",
+        "popular": false
+      },
+      {
+        "id": "2413929-m11",
+        "name": "Chocolate Brownie",
+        "price": 7,
+        "category": "Desserts",
+        "popular": true
+      },
+      {
+        "id": "2413929-m12",
+        "name": "Tiramisu",
+        "price": 10,
+        "category": "Desserts",
+        "popular": true
+      }
+    ]
+  }, 
+
+  {
+    "id": "2413929-golden-wok",
+    "name": "Golden Wok",
+    "location": "Mahallah Ali, Block B",
+    "openHours": "10:00 am - 10:00 pm",
+    "isOpen": true,
+    "menu": [
+      {
+        "id": "2413929-c1",
+        "name": "Chicken Fried Rice",
+        "price": 7,
+        "category": "Main Course",
+        "popular": true
+      },
+      {
+        "id": "2413929-c2",
+        "name": "Char Kuey Teow",
+        "price": 7,
+        "category": "Main Course",
+        "popular": true
+      },
+      {
+        "id": "2413929-c3",
+        "name": "Sweet and Sour Chicken",
+        "price": 10,
+        "category": "Main Course",
+        "popular": false
+      },
+      {
+        "id": "2413929-c4",
+        "name": "Prawn Dumplings",
+        "price": 9,
+        "category": "Appetizers",
+        "popular": true
+      },
+      {
+        "id": "2413929-c5",
+        "name": "Chinese Herbal Tea",
+        "price": 4,
+        "category": "Beverages",
+        "popular": false
+      }
+    ]
+  },
+  
+  {
+    "id": "2413929-selera-kampung",
+    "name": "Selera Kampung",
+    "location": "Mahallah Siddiq, Block C",
+    "openHours": "9:00 am - 12:00 pm",
+    "isOpen": true,
+    "menu": [
+      {
+        "id": "2413929-my1",
+        "name": "Nasi Lemak Ayam",
+        "price": 6,
+        "category": "Main Course",
+        "popular": true
+      },
+      {
+        "id": "2413929-my2",
+        "name": "Nasi Goreng Biasa",
+        "price": 3,
+        "category": "Main Course",
+        "popular": true
+      },
+      {
+        "id": "2413929-my3",
+        "name": "Soto",
+        "price": 5,
+        "category": "Main Course",
+        "popular": true
+      },
+      {
+        "id": "2413929-my4",
+        "name": "Cucur Udang",
+        "price": 7,
+        "category": "Appetizers",
+        "popular": false
+      },
+      {
+        "id": "2413929-my5",
+        "name": "Teh Tarik",
+        "price": 3,
+        "category": "Beverages",
+        "popular": true
+      }
+    ]
+  }
+]
+
+
+
+
+
+    
