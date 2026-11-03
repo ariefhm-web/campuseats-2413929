@@ -16,3 +16,9 @@ One thing the AI got wrong and how I fixed it: none
 What I asked for: Identified the error because of why it show blank pages and help me identify what TODO task needs to be done
 What I kept, changed or rejected, and why: I make a change on the App.jsx file where I mostly not include the imports of jsx files, useState, fetching problems and TODO requirements needed. This cause the system to crash and show blank pages
 One thing the AI got wrong and how I fixed it: none
+
+## Week 4- Tool(s):Claude and Chatgpt
+What I asked for: Identified the TODO task and explain how to answer. Also helping the personal features by what requirements needs to change in the files
+What I kept, changed or rejected, and why:  
+One thing the AI got wrong and how I fixed it: none
+

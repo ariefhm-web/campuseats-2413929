@@ -1,4 +1,4 @@
-function MenuItemCard({ item, onAdd}) {
+function MenuItemCard({ item, onAdd }) {
   return (
     <article className="card menu-card">
       <div className="thumb" aria-hidden="true">{item.name.charAt(0)}</div>
@@ -7,6 +7,7 @@ function MenuItemCard({ item, onAdd}) {
       {item.description && <p className="muted">{item.description}</p>}
       <p className="price">RM {item.price.toFixed(2)}</p>
       <button
+        type="button"
         className="btn"
         disabled={item.available === false}
         onClick={() => onAdd(item)}
@@ -16,5 +17,5 @@ function MenuItemCard({ item, onAdd}) {
     </article>
   )
 }
- 
+
 export default MenuItemCard

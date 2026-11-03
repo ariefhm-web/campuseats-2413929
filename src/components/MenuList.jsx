@@ -1,17 +1,19 @@
 import MenuItemCard from './MenuItemCard.jsx'
- 
-function MenuList({ items, onAdd, onView }) {
+import { useCart } from '../hooks/useCart.js'
+
+function MenuList({ items }) {  // no onAdd prop any more
+  const { addToCart } = useCart()
+  
   if (items.length === 0) {
     return <p className="muted">No items on this menu yet.</p>
   }
- 
-  return (
-    <div className="grid">
+
+return (
+  <div className="grid">
       {items.map((item) => (
-         <MenuItemCard key={item.id} item={item} onAdd={onAdd} onView={onView} />
-      ))}
-    </div>
-  )
+          <MenuItemCard key={item.id} item={item} onAdd={addToCart} />
+    ))}
+  </div>
+ )
 }
- 
 export default MenuList
