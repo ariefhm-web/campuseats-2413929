@@ -6,7 +6,9 @@ import { Loading, ErrorMessage } from '../components/Status.jsx'
 import VendorCard from '../components/VendorCard.jsx'
 
 export default function HomePage() {
+
   const { vendors, loading, error, reload } = useVendors()
+
   const { recent, clearViewed } = useRecentlyViewed()
 
   if (loading) {
@@ -19,24 +21,31 @@ export default function HomePage() {
 
   return (
     <>
+
+      {/* Available Vendors */}
       <section>
         <h2 className="section-title">Available Vendors</h2>
 
         <div className="vendor-grid">
+
           {vendors.map((vendor) => (
             <VendorCard
               key={vendor.id}
               vendor={vendor}
             />
           ))}
+
         </div>
       </section>
 
+      {/* Recently Viewed Menu Items */}
       {recent.length > 0 && (
         <section>
+
           <div className="recent-heading">
+
             <h2 className="section-title">
-              Recently Viewed
+              Recently Viewed Items
             </h2>
 
             <button
@@ -46,29 +55,44 @@ export default function HomePage() {
             >
               Clear history
             </button>
+
           </div>
 
           <div className="vendor-grid">
-            {recent.map((vendor) => (
+
+            {recent.map((item) => (
               <Link
-                key={vendor.id}
-                to={`/vendor/${vendor.id}`}
+                key={`${item.vendorId}-${item.id}`}
+                to={`/vendor/${item.vendorId}`}
                 className="card recent-card"
               >
-                <h3>{vendor.name}</h3>
+
+                <h3>{item.name}</h3>
 
                 <p className="muted">
-                  {vendor.location}
+                  {item.vendorName}
+                </p>
+
+                <p className="muted">
+                  {item.category}
+                </p>
+
+                <p className="price">
+                  RM {item.price.toFixed(2)}
                 </p>
 
                 <span className="recent-link">
                   View vendor →
                 </span>
+
               </Link>
             ))}
+
           </div>
+
         </section>
       )}
+
     </>
   )
 }

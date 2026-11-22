@@ -1,22 +1,76 @@
 
-import { NavLink } from 'react-router'
+import { NavLink, useNavigate } from 'react-router'
 import { useCart } from '../hooks/useCart.js'
- 
+import { useAuth } from '../hooks/useAuth.js'
+
 function Header() {
+
   const { count } = useCart()
+
+  const { user, logout } = useAuth()
+
+  const navigate = useNavigate()
+
+  // Handle logout.
+  async function handleLogout() {
+
+    const recentKey = user
+      ? 'ce-recent-' + user.uid
+      : null
+
+    await logout()
+
+    if (recentKey) {
+      localStorage.removeItem(recentKey)
+    }
+
+    navigate('/')
+  }
+
   return (
     <header className="header">
+
       <NavLink to="/" className="logo-link">
         <h1 className="logo">CampusEats</h1>
       </NavLink>
+
       <nav className="nav">
-        <NavLink to="/" end>Vendors</NavLink>
-        <NavLink to="/orders">My Orders</NavLink>
+
+        <NavLink to="/" end>
+          Vendors
+        </NavLink>
+
+        <NavLink to="/orders">
+          My Orders
+        </NavLink>
+
         <NavLink to="/cart" className="cart">
-        Cart <span className="badge">{count}</span>
-</NavLink></nav>
+          Cart <span className="badge">{count}</span>
+        </NavLink>
+
+        {user ? (
+          <>
+            <span className="user-name">
+              Hi, {user.displayName || user.email}
+            </span>
+
+            <button
+              type="button"
+              className="link"
+              onClick={handleLogout}
+            >
+              Log out
+            </button>
+          </>
+        ) : (
+          <NavLink to="/login">
+            Log in
+          </NavLink>
+        )}
+
+      </nav>
     </header>
   )
 }
- 
+
 export default Header

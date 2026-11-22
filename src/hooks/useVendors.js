@@ -8,11 +8,6 @@ export function useVendors() {
   const [reloadKey, setReloadKey] = useState(0)
 
   useEffect(() => {
-// the fetch from your Week 3 App.jsx
-// goes here: full code on the next slide
-}, [reloadKey])
-
-  useEffect(() => {
     const controller = new AbortController()
     setLoading(true)
     setError(null)
